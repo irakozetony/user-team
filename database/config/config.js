@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-module.exports = {
+const dbConfig = {
     development: {
         url: process.env.DEV_DATABASE_URL,
         dialect: "postgres",
@@ -16,3 +16,5 @@ module.exports = {
         dialect: "postgres",
     },
 };
+
+export default dbConfig;

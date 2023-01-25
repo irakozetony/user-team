@@ -1,8 +1,6 @@
-import dotenv from "dotenv";
+require("dotenv").config();
 
-dotenv.config();
-
-const dbConfig = {
+module.exports = {
     development: {
         url: process.env.DEV_DATABASE_URL,
         dialect: "postgres",
@@ -16,5 +14,3 @@ const dbConfig = {
         dialect: "postgres",
     },
 };
-
-export default dbConfig;

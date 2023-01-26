@@ -7,6 +7,10 @@ const compare = bcrypt.compare;
 const sign = jwt.sign;
 
 export const local_user_signup = async (req, res, next) => {
+    console.log(req.user)
+    if(req.user.status === 400){
+        return res.status(400).json({message: req.user.message})
+    }
     res.status(200).json({ message: "Signup succesful", user_token: req.user });
 };
 

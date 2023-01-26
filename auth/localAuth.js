@@ -26,11 +26,11 @@ const localSignupStrategy = new localStrategy(
                 where: { email: email },
             });
             if (user) {
-                return done({ message: user.email + " is already registered" });
+                return done(null,{ status:400, message: user.email + " is already registered" });
             }
-            console.log(user);
+            console.log("user found ",user);
             bcrypt.genSalt(10, (err, salt) => {
-                if (err) return next(JSON.stringify(err));
+                if (err) return next({error:"user alread in ", details:JSON.stringify(err)});
                 bcrypt.hash(password, salt, async (err, hash) => {
                     if (err) return next(err);
 
@@ -43,7 +43,8 @@ const localSignupStrategy = new localStrategy(
                 });
             });
         } catch (err) {
-            done({ error: JSON.stringify(err) });
+            console.error(err)
+            done(null,{ error: JSON.stringify(err) });
         }
     }
 );

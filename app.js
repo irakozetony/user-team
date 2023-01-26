@@ -57,11 +57,10 @@ app.get('/google/callback',
         failureRedirect: '/auth/failure'
     })
 )
-app.get('/sample-ui',ensureGuest,(req,res)=>{
+app.get('/sample-ui',(req,res)=>{
     res.send(`<a href="/auth/google">Authenticate with google </a>`);
 })
-app.get('/protected',ensureAuth,(req,res)=>{
-    console.log("user:",req.user)
+app.get('/protected',ensureAuth,async(req,res)=>{
     res.send(`Hello !,${JSON.stringify(req.user)}`);
 })
 app.get('/logout',(req,res)=>{

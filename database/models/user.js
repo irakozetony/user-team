@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     province: DataTypes.STRING,
     district: DataTypes.STRING,
     street: DataTypes.STRING,
-    cell: DataTypes.STRING
+    cell: DataTypes.STRING,
+    google:DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',

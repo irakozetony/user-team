@@ -1,4 +1,7 @@
 "use strict";
+
+const { BOOLEAN } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
@@ -28,6 +31,10 @@ module.exports = {
             cell: {
                 type: Sequelize.STRING,
             },
+            google:{
+                type: Sequelize.BOOLEAN, 
+            },
+         
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

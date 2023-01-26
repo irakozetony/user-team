@@ -3,8 +3,9 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import { sequelize } from "./database/models/";
 import passport from "passport";
-import { localSignupStrategy } from "./auth/localAuth";
+import { authenticate, localSignupStrategy } from "./auth/localAuth";
 import localAuthRouter from "./routes/localAuthRoute";
+import updateRoute from "./routes/updateProfile";
 import models from './database/models/index';
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use("/api/localauth", localAuthRouter);
+app.use("/api/profile",authenticate, updateRoute)
 app.use("/api/users", async(req, res)=>{
     try{
         const users = await models.User.findAll()

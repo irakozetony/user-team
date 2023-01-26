@@ -33,3 +33,21 @@ export const local_user_login = async (req, res, next) => {
         return res.status(400).json({ error: err });
     }
 };
+
+export const updateUser = async (req, res) => {
+    try {
+      const userId  = req.user.id;
+      const [ updated ] = await models.User.update(req.body, {
+        where: { id: userId }
+      });
+      if (updated) {
+        const updatedUser = await models.User.findOne({ where: { id: userId } });
+        const {dataValues:{password,...others}} = updatedUser
+        return res.status(200).json({ user: others });
+      }
+      throw new Error('user not found');
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  
+  };

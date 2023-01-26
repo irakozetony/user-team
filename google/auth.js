@@ -2,6 +2,7 @@ import passport from "passport";
 import googlePassport from 'passport-google-oauth2';
 import dotenv from "dotenv";
 import models from "../database/models"
+import jwt from "jsonwebtoken";
 dotenv.config()
 let GoogleStrategy = googlePassport.Strategy;
 
@@ -24,21 +25,22 @@ passport.use(new GoogleStrategy({
       lang: profile.language,
     }
     try {
-      const user = await models.User.findOne({ where: { email: newUser.email } });
-      if(user){
-        done(null,{data: user,token: accessToken})
-      }else{
+      let user = await models.User.findOne({ where: { email: newUser.email } });
+      if(!user){
          user = await models.User.create({
-          email: req.newUser.email,
+          email: newUser.email,
           google: true,
       });
-      done (null, {data: user,token: accessToken})
         
       }
+        const token = jwt.sign(
+            {email:newUser.email, id:user.id},process.env.SECRET
+        );
+        return done (null, {data: user,token})
     } catch (error) {
-      console.log(error.message)
+      console.error("auth.js ",error.message)
+        return done(null,{data: profile});
     }
-    return done(null,{data: profile,token: accessToken});
   }
 ));
 passport.serializeUser((user,done)=>done(null,user));

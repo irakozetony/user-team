@@ -61,8 +61,6 @@ app.get('/sample-ui',(req,res)=>{
     res.send(`<a href="/auth/google">Authenticate with google </a>`);
 })
 app.get('/protected',ensureAuth,async(req,res)=>{
-  
-    console.log("usgfcvhbjn:",req.token)
     res.send(`Hello !,${JSON.stringify(req.user)}`);
 })
 app.get('/logout',(req,res)=>{
